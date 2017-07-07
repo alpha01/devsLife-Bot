@@ -26,3 +26,6 @@ For local development, test the bot using the following:
 [https://developers.google.com/api-client-library/php/start/get_started](https://developers.google.com/api-client-library/php/start/get_started)
 [https://developers.google.com/youtube/v3/docs/channels](https://developers.google.com/youtube/v3/docs/channels)
 [http://teamreflex.github.io/DiscordPHP/](http://teamreflex.github.io/DiscordPHP/)
+
+## Example
+![devsLife-Bot Image](http://i.imgur.com/mLMaoE2.png)
