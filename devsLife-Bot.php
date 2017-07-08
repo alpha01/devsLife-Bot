@@ -156,11 +156,11 @@ function dev($response) {
 function message($response) {
 	global $discord, $DISCORD_CHANNEL_ID;
 
-	$message = ($response['snippet']['liveBroadcastContent'] == 'live' ? ':red_circle: New Stream' : ':camera: New Video');
+	$message = ($response['snippet']['liveBroadcastContent'] == 'live' ? ':red_circle: New Live Stream Started!' : ':camera: New Video Uploaded!');
 	
 	try {
 		$discord->channel->createMessage(['channel.id' => $DISCORD_CHANNEL_ID,
-				'content' => "$message Uploaded!\nhttps://www.youtube.com/watch?v={$response['id']['videoId']}"]);
+				'content' => "$message \nhttps://www.youtube.com/watch?v={$response['id']['videoId']}"]);
 	} catch (Exception $e) {
 		echo 'Failed to send message to Discord: ',  $e->getMessage(), "\n";
 	}
