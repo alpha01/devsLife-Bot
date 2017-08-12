@@ -88,9 +88,9 @@ function prod($response) {
 	}
 
 	// Check if it's a new video post
-	if ($stmt = $mysqli->prepare("SELECT count(*) FROM `video_uploads` WHERE videoId=? AND publishedAt=? AND live=?")) {
+	if ($stmt = $mysqli->prepare("SELECT count(*) FROM `video_uploads` WHERE videoId=? AND live=?")) {
 
-		$stmt->bind_param('sss', $response['id']['videoId'], $response['snippet']['publishedAt'], $response['snippet']['liveBroadcastContent']);
+		$stmt->bind_param('ss', $response['id']['videoId'], $response['snippet']['liveBroadcastContent']);
 		$stmt->execute();
 		$stmt->bind_result($check_rows);
 		$stmt->fetch();
@@ -156,7 +156,19 @@ function dev($response) {
 function message($response) {
 	global $discord, $DISCORD_CHANNEL_ID;
 
-	$message = ($response['snippet']['liveBroadcastContent'] == 'live' ? ':red_circle: New Live Stream Started!' : ':camera: New Video Uploaded!');
+	switch ($response['snippet']['liveBroadcastContent']) {
+		case 'none':
+			$message = ':camera: New Video Uploaded!';
+			break;
+		case 'upcoming':
+			$message = ':calendar_spiral: New Live Stream Scheduled!';
+			break;
+		case 'live':
+			$message = ':red_circle: New Live Stream Started!';
+			break;
+		default:
+			$message = '';
+	}
 	
 	try {
 		$discord->channel->createMessage(['channel.id' => $DISCORD_CHANNEL_ID,
